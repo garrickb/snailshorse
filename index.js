@@ -31,13 +31,15 @@ var questions = [
 ];
 
 
-controller.hears(['salesforce','snailshorse'],['ambient','direct_message'],function(bot,message) {
+controller.hears(['salesforce','snailshorse'],['ambient','direct_message','direct_mention'],function(bot,message) {
 	do {
-	var sales = rhymes.sale[Math.floor(Math.random() * rhymes.sale.length)];
-	var force = rhymes.force[Math.floor(Math.random() * rhymes.force.length)];
-	var salesforce = sales.word.charAt(0).toUpperCase() + sales.word.slice(1) + (sales.word.charAt(sales.word.length - 1) != "s"?"s":"") + force.word.charAt(0).toUpperCase() + force.word.slice(1);
-	var question = questions[Math.floor(Math.random() * questions.length)];
-    } while (sales.syllables + force.syllables > 3);
+		var sales = rhymes.sale[Math.floor(Math.random() * rhymes.sale.length)];
+		var force = rhymes.force[Math.floor(Math.random() * rhymes.force.length)];
+		var salesforce = sales.word.charAt(0).toUpperCase() + sales.word.slice(1) + (sales.word.charAt(sales.word.length - 1) != "s"?"s":"") + force.word.charAt(0).toUpperCase() + force.word.slice(1);
+		var question = questions[Math.floor(Math.random() * questions.length)];
+    } while ((parseInt(sales.syllables) + parseInt(force.syllables)) > 3);
+
+    console.log(sales.syllables + "," +  force.syllables);
 
 
     bot.reply(message, question[0] + "_" + salesforce + "_" + question[1]);
