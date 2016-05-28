@@ -31,7 +31,7 @@ var questions = [
 ];
 
 
-controller.hears(['salesforce','snailshorse'],['direct_message','direct_mention','mention'],function(bot,message) {
+controller.hears(['salesforce','snailshorse'],['ambient'],function(bot,message) {
 	var sales = rhymes.sale[Math.floor(Math.random() * rhymes.sale.length)].word;
 	var force = rhymes.force[Math.floor(Math.random() * rhymes.force.length)].word;
 	var salesforce = sales.charAt(0).toUpperCase() + sales.slice(1) + (sales.charAt(sales.length - 1) != "s"?"s":"") + force.charAt(0).toUpperCase() + force.slice(1);
