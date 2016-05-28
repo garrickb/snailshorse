@@ -54,6 +54,8 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 var Botkit = require('botkit');
+var fs = require('fs');
+var rhymes = JSON.parse(fs.readFileSync('rhymes.json', 'utf8'));
 
 
 if (!process.env.token) {
@@ -73,55 +75,22 @@ controller.spawn({
   }
 });
 
+var questions = [
+	["Are you talking about ", "?"],
+	["Did you mean ", "?"],
+	["You meant ", ", right?"],
+	["I think you meant ", "."],
+	["How about ", "?"],
+	["It's called ", "."],
+	["...", ""]
+];
 
-controller.hears(['hello','hi'],['direct_message','direct_mention','mention'],function(bot,message) {
-    bot.reply(message,"Hello.");
-});
 
-controller.hears(['attach'],['direct_message','direct_mention'],function(bot,message) {
+controller.hears(['salesforce','snailshorse'],['direct_message','direct_mention','mention'],function(bot,message) {
+	var sales = rhymes.sale[Math.floor(Math.random() * rhymes.sale.length)].word;
+	var force = rhymes.force[Math.floor(Math.random() * rhymes.force.length)].word;
+	var salesforce = sales.charAt(0).toUpperCase() + sales.slice(1) + (sales.charAt(sales.length - 1) != "s"?"s":"") + force.charAt(0).toUpperCase() + force.slice(1);
+	var question = questions[Math.floor(Math.random() * questions.length)];
 
-  var attachments = [];
-  var attachment = {
-    title: 'This is an attachment',
-    color: '#FFCC99',
-    fields: [],
-  };
-
-  attachment.fields.push({
-    label: 'Field',
-    value: 'A longish value',
-    short: false,
-  });
-
-  attachment.fields.push({
-    label: 'Field',
-    value: 'Value',
-    short: true,
-  });
-
-  attachment.fields.push({
-    label: 'Field',
-    value: 'Value',
-    short: true,
-  });
-
-  attachments.push(attachment);
-
-  bot.reply(message,{
-    text: 'See below...',
-    attachments: attachments,
-  },function(err,resp) {
-    console.log(err,resp);
-  });
-});
-
-controller.hears(['dm me'],['direct_message','direct_mention'],function(bot,message) {
-  bot.startConversation(message,function(err,convo) {
-    convo.say('Heard ya');
-  });
-
-  bot.startPrivateConversation(message,function(err,dm) {
-    dm.say('Private reply!');
-  });
-
+    bot.reply(message, question[0] + "_" + salesforce + "_" + question[1]);
 });
