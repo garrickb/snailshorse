@@ -39,8 +39,5 @@ controller.hears(['salesforce','snailshorse'],['ambient','direct_message','direc
 		var question = questions[Math.floor(Math.random() * questions.length)];
     } while ((parseInt(sales.syllables) + parseInt(force.syllables)) > 3);
 
-    console.log(sales.syllables + "," +  force.syllables);
-
-
     bot.reply(message, question[0] + "_" + salesforce + "_" + question[1]);
 });
