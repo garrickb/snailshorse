@@ -31,7 +31,7 @@ var questions = [
 ];
 
 
-controller.hears(['salesforce','snailshorse'],['ambient'],function(bot,message) {
+controller.hears(['salesforce','snailshorse'],['ambient','direct_message'],function(bot,message) {
 	do {
 	var sales = rhymes.sale[Math.floor(Math.random() * rhymes.sale.length)];
 	var force = rhymes.force[Math.floor(Math.random() * rhymes.force.length)];
